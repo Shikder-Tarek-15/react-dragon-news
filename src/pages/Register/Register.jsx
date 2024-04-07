@@ -1,11 +1,35 @@
 import { Link } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
+import { useContext } from "react";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+import { updateProfile } from "firebase/auth";
+import auth from "../../firebase/firebase.config";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
+  const { handleEmailPasswordRegister } = useContext(AuthContext);
+
   const handleRegister = (e) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     console.log(form.get("email"));
+    const name = form.get("name");
+    const photo = form.get("photo");
+    const email = form.get("email");
+    const password = form.get("password");
+
+    handleEmailPasswordRegister(email, password)
+      .then(() => {
+        updateProfile(auth.currentUser, {
+          displayName: { name },
+          photoURL: { photo },
+        })
+          .then(() => console.log("Update successfull"))
+          .catch((error) => console.error(error));
+        toast("Register Succesfull");
+      })
+      .catch((error) => console.error(error));
   };
   return (
     <div>
@@ -69,6 +93,7 @@ const Register = () => {
           </Link>
         </p>
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -1,11 +1,24 @@
 import { Link } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
+import { useContext } from "react";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
+  const { handleEmailPasswordLogin } = useContext(AuthContext);
+
   const handleLogin = (e) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     console.log(form.get("email"));
+    const email = form.get("email");
+    const password = form.get("password");
+    handleEmailPasswordLogin(email, password)
+      .then(() => {
+        toast("Login Successfull");
+      })
+      .catch((error) => console.log(error));
   };
   return (
     <div className="mx-auto ">
@@ -48,12 +61,13 @@ const Login = () => {
           </div>
         </form>
         <p className="text-center pb-4">
-          Don't have an account{" "}
+          Do not have an account{" "}
           <Link className="font-bold text-blue-600" to="/register">
             Register
           </Link>
         </p>
       </div>
+      <ToastContainer />
     </div>
   );
 };

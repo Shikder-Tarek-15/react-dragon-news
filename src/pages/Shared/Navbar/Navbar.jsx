@@ -1,7 +1,19 @@
 import { Link, NavLink } from "react-router-dom";
 import userDefaultPic from "../../../assets/user.png";
+import { useContext } from "react";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Navbar = () => {
+  const { user, handleLogOut } = useContext(AuthContext);
+
+  const logOut = () => {
+    handleLogOut().then(() => {
+      toast("Log out Successfull");
+    });
+  };
+
   const navLinks = (
     <>
       <li>
@@ -53,10 +65,17 @@ const Navbar = () => {
             <img src={userDefaultPic} />
           </div>
         </label>
-        <Link to="/login">
-          <button className="btn">Login</button>
-        </Link>
+        {user ? (
+          <button onClick={logOut} className="btn">
+            Log Out
+          </button>
+        ) : (
+          <Link to="/login">
+            <button className="btn">Login</button>
+          </Link>
+        )}
       </div>
+      <ToastContainer />
     </div>
   );
 };
