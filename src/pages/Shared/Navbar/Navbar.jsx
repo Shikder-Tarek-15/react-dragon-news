@@ -2,8 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import userDefaultPic from "../../../assets/user.png";
 import { useContext } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const { user, handleLogOut } = useContext(AuthContext);
@@ -75,7 +74,6 @@ const Navbar = () => {
           </Link>
         )}
       </div>
-      <ToastContainer />
     </div>
   );
 };

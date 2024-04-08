@@ -4,8 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { updateProfile } from "firebase/auth";
 import auth from "../../firebase/firebase.config";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const { handleEmailPasswordRegister } = useContext(AuthContext);
@@ -93,7 +92,6 @@ const Register = () => {
           </Link>
         </p>
       </div>
-      <ToastContainer />
     </div>
   );
 };

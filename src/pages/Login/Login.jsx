@@ -1,12 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, Navigate, useNavigate } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 import { useContext } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const { handleEmailPasswordLogin } = useContext(AuthContext);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  console.log("I am", location);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -16,7 +20,8 @@ const Login = () => {
     const password = form.get("password");
     handleEmailPasswordLogin(email, password)
       .then(() => {
-        toast("Login Successfull");
+        toast.success("Login Successfull");
+        navigate(location?.state ? location.state : "/");
       })
       .catch((error) => console.log(error));
   };
@@ -67,7 +72,6 @@ const Login = () => {
           </Link>
         </p>
       </div>
-      <ToastContainer />
     </div>
   );
 };
